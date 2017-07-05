@@ -6,4 +6,6 @@ and subtractions.
 
 Open source and free media and libraries
 
-Images courtesy of openclipart.org. Sounds by Daniel Simion (soundbible.com),  Suntemple (https://freesound.org/people/suntemple).
+Images courtesy of http://openclipart.org. 
+Sounds by Daniel Simion (http://www.soundbible.com),  
+Suntemple (https://freesound.org/people/suntemple).

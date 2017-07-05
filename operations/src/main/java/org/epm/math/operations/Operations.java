@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.AnyThread;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,8 +23,10 @@ final class Operations {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({OP_ADD_1, OP_ADD_2, OP_ADD_3, OP_SUB_1,OP_SUB_2})
-    public @interface OperationType {}
+    @interface OperationType {}
 
+    @StringRes
+    final static int[] OPNAMES = {R.string.addition1,R.string.addition2,R.string.addition3,R.string.subtraction1,R.string.subtraction2};
     @OperationType
     private int opType = OP_ADD_1;
 
@@ -33,6 +36,16 @@ final class Operations {
 
     Operations(@NonNull final Context ctx) {
 
+    }
+
+    @OperationType
+    int getOpType(){
+        return opType;
+    }
+
+    void changeOpType(){
+        //noinspection WrongConstant
+        opType = (opType+1) % 5;
     }
 
     @AnyThread

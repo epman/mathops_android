@@ -59,6 +59,13 @@ public final class OperationsActivity extends AppCompatActivity implements Loade
                 ((TextView) findViewById(R.id.textViewResults)).setText("");
             }
         });
+        findViewById(R.id.buttonChangeOperation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                operations.changeOpType();
+                newOperation();
+            }
+        });
 
         initTextSwitcher(R.id.textSwitcerPoints);
 
@@ -217,7 +224,11 @@ public final class OperationsActivity extends AppCompatActivity implements Loade
         if (operations==null)
             return;
 
-        ((TextView)findViewById(R.id.textView1)).setText(Integer.toString(operations.op1)+"+");
+        final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
+                operations.getOpType()==Operations.OP_SUB_2;
+        ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
+        ((TextView)findViewById(R.id.textView1)).setText(Integer.toString(operations.op1)+
+                (isSub?"-":"+"));
         ((TextView)findViewById(R.id.textView2)).setText(Integer.toString(operations.op2)+"=");
         if (result==0) {
             ((TextView) findViewById(R.id.textViewResults)).setText("");
