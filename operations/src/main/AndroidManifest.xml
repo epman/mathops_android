@@ -4,15 +4,19 @@
 
     <application>
         <activity android:name=".MainActivity">
-            <intent-filter android:order="1">
+            <intent-filter android:order="1" android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="math.epm.org"
-                    android:pathPattern="/.*"
+                    android:host="www.escogitare.com"
+                    android:pathPattern="/apps/math"
+                    android:scheme="http" />
+                <data
+                    android:host="www.escogitare.com"
+                    android:pathPattern="/apps/math"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>
