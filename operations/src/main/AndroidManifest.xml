@@ -3,9 +3,7 @@
     package="org.epm.math.operations">
 
     <application>
-        <activity
-            android:name=".OperationsActivity"
-            android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -13,9 +11,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="www.escogitare.com"
-                    android:pathPattern="/apps/mathops"
-                    android:scheme="http" />
+                    android:host="math.epm.org"
+                    android:pathPattern="/.*"
+                    android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

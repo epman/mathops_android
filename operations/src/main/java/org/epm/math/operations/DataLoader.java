@@ -28,8 +28,8 @@ final class DataLoader extends AsyncTaskLoader {
 
     @Override
     public Object loadInBackground() {
-        mpVictory = MediaPlayer.create(getContext(), R.raw.dixiehorn);
-        mpLose = MediaPlayer.create(getContext(), R.raw.lose);
+        mpVictory = MediaPlayer.create(getContext(), org.epm.math.R.raw.dixiehorn);
+        mpLose = MediaPlayer.create(getContext(), org.epm.math.R.raw.lose);
         return mpVictory;
     }
 }

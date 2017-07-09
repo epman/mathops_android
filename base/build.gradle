@@ -3,14 +3,12 @@ apply plugin: 'com.android.feature'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
-
+    baseFeature true
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
-        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -23,9 +21,7 @@ android {
 dependencies {
     application project(':app')
     feature project(':operations')
-
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:26.0.0-beta2'
-    compile "com.android.support:support-core-utils:26.0.0-beta2"
-
+    implementation 'com.android.support:appcompat-v7:26.+'
+    api 'com.android.support:appcompat-v7:26.0.0-beta2'
+    api 'com.android.support.constraint:constraint-layout:1.0.2'
 }
