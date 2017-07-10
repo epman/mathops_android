@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.epm.math.operations.OperationsActivity"
+    tools:context="org.epm.math.operations.MainActivity"
     tools:ignore="HardcodedText">
 
     <LinearLayout

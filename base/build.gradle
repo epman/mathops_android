@@ -21,7 +21,7 @@ android {
 dependencies {
     application project(':app')
     feature project(':operations')
-    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support:appcompat-v7:26.0.0-beta2'
     api 'com.android.support:appcompat-v7:26.0.0-beta2'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
 }
