@@ -1,5 +1,15 @@
 apply plugin: 'com.android.instantapp'
 
+android {
+    defaultConfig {
+        applicationId "org.epm.math"
+        minSdkVersion 23
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
 dependencies {
     implementation project(':operations')
     implementation project(':base')

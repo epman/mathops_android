@@ -39,6 +39,15 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
     private final Handler handler = new Handler();
 
+    @IdRes
+    private final static int[] textViewsOp = {
+            R.id.textView1_1, R.id.textView1_2, R.id.textView1_sign,
+            R.id.textView2_1, R.id.textView2_2, R.id.textView2_sign,
+    };
+    @IdRes
+    private final static int[] textViewsRes = {
+            R.id.textView3_1, R.id.textView3_2, R.id.textView3_3
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +59,12 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
         operations = new Operations(this);
 
-        findViewById(R.id.textView1).setOnClickListener(newOpOnClickListener);
-        findViewById(R.id.textView2).setOnClickListener(newOpOnClickListener);
-        findViewById(R.id.textViewResults).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((TextView) findViewById(R.id.textViewResults)).setText("");
-            }
-        });
+        for (final @IdRes int tvid: textViewsOp) {
+            findViewById(tvid).setOnClickListener(newOpOnClickListener);
+        }
+        for (final @IdRes int tvid: textViewsRes) {
+            findViewById(tvid).setOnClickListener(deleteClickListener);
+        }
         findViewById(R.id.buttonChangeOperation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,6 +224,18 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         }, 1000);
     }
 
+    private void setDigit(@IdRes final int tvId, final int digit, final int number){
+        final int n0 = number / (int)java.lang.Math.pow(10, digit);
+        final int n1 = n0 % 10;
+        if (n0==0 && n1==0 && digit>0) {
+            ((TextView)findViewById(tvId)).setText(" ");
+        } else {
+            final String s = Integer.toString(n1);
+            ((TextView) findViewById(tvId)).setText(s);
+        }
+
+    }
+
     @UiThread
     private void updateUI()
     {
@@ -226,14 +245,16 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
                 operations.getOpType()==Operations.OP_SUB_2;
         ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
-        ((TextView)findViewById(R.id.textView1)).setText(Integer.toString(operations.op1)+
-                (isSub?"-":"+"));
-        ((TextView)findViewById(R.id.textView2)).setText(Integer.toString(operations.op2)+"=");
-        if (result==0) {
-            ((TextView) findViewById(R.id.textViewResults)).setText("");
-        } else {
-            ((TextView) findViewById(R.id.textViewResults)).setText(Integer.toString(result) + " ");
-        }
+        setDigit(R.id.textView1_1, 0, operations.op1);
+        setDigit(R.id.textView1_2, 1, operations.op1);
+
+        setDigit(R.id.textView2_1, 0, operations.op2);
+        setDigit(R.id.textView2_2, 1, operations.op2);
+
+        setDigit(R.id.textView3_1, 0, result);
+        setDigit(R.id.textView3_2, 1, result);
+        setDigit(R.id.textView3_3, 2, result);
+
         final Math math = Math.getInstance(this);
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
     }

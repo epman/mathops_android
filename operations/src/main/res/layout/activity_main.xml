@@ -63,42 +63,104 @@
         android:layout_above="@+id/buttonsTopRow"
         android:layout_below="@+id/textCurrentOperation">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <GridLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:columnCount="4"
+            android:rowCount="4">
+
+            <android.support.v4.widget.Space />
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="match_parent"
+                android:id="@+id/textView1_2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="1+"
-                android:textAppearance="@style/BigFont" />
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
+                android:id="@+id/textView1_1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="1="
-                android:textAppearance="@style/BigFont" />
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textView1_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="+"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <android.support.v4.widget.Space />
+
+            <TextView
+                android:id="@+id/textView2_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textView2_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textView2_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="="
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
 
             <View
-                android:layout_width="match_parent"
+                android:layout_width="180dp"
                 android:layout_height="4dp"
+                android:layout_columnSpan="4"
                 android:background="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/textViewResults"
-                android:layout_width="match_parent"
+                android:id="@+id/textView3_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textView3_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textView3_1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="2 "
-                android:textAppearance="@style/BigFont" />
-        </LinearLayout>
+                android:text="1"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
+
+            <android.support.v4.widget.Space />
+
+        </GridLayout>
     </FrameLayout>
 
     <LinearLayout

@@ -7,12 +7,10 @@ android {
 
     defaultConfig {
         applicationId "org.epm.math"
-        minSdkVersion 23
+        minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
+        versionCode 3
         versionName "1.0"
-
-
     }
     buildTypes {
         release {
