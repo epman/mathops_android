@@ -58,6 +58,7 @@
         android:text="@string/addition1" />
 
     <FrameLayout
+        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonsTopRow"
@@ -73,7 +74,7 @@
 
             <android.support.v4.widget.Space />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView1_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +91,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView1_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +102,7 @@
 
             <android.support.v4.widget.Space />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +110,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView2_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +119,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView2_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,7 +134,7 @@
                 android:layout_columnSpan="4"
                 android:background="@color/colorPrimaryDark" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView3_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,7 +142,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,7 +150,7 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <TextView
+            <TextSwitcher
                 android:id="@+id/textView3_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,6 +162,23 @@
             <android.support.v4.widget.Space />
 
         </GridLayout>
+
+        <ImageView
+            android:id="@+id/imgViewSmileOk"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_smile_4" />
+        <ImageView
+            android:id="@+id/imgViewSmileNo"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_smile_2" />
     </FrameLayout>
 
     <LinearLayout
