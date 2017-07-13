@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_medal" />
+            app:srcCompat="@drawable/ic_medal"
+            android:padding="2dp"/>
 
         <TextSwitcher
             android:id="@+id/textSwitcerPoints"

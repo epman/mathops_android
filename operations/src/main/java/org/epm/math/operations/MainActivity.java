@@ -1,6 +1,7 @@
 package org.epm.math.operations;
 
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,9 +112,15 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader loader, Object data) {
+        final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        final int actualVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, actualVolume + 1, AudioManager.FLAG_SHOW_UI);
+
         final DataLoader l = (DataLoader)loader;
         mpLose = l.mpLose;
         mpVictory = l.mpVictory;
+        mpVictory.setVolume(0.5f,0.5f);
+        mpLose.setVolume(0.5f,0.5f);
     }
 
     @Override
