@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="org.epm.math.operations.MainActivity"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    >
 
     <LinearLayout
         android:id="@+id/topBar"
@@ -59,6 +60,7 @@
         android:text="@string/addition1" />
 
     <FrameLayout
+        android:background="@drawable/ic_stack_of_papers"
         android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

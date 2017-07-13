@@ -215,7 +215,8 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     private void buttonPressed(@NonNull final Button b) {
         if (operations==null)
             return;
-        result = result * 10 + Integer.parseInt( (String) b.getTag() );
+        final int numDigits = result==0?0:(int)java.lang.Math.log10(result)+1;
+        result = result + Integer.parseInt( (String) b.getTag() ) * (int)java.lang.Math.pow(10, numDigits);
         updateUI();
         final int l1 = (int)java.lang.Math.log10(result)+1;
         final int l2 = (int)java.lang.Math.log10(operations.result)+1;
@@ -346,6 +347,12 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             tv1 = R.id.textView1_1;
             tv2 = R.id.textView2_1;
             tv3 = R.id.textView3_1;
+            final int numDigits = ((int) java.lang.Math.log10(operations.result)) + 1;
+            if (numDigits>1 && result!=operations.result && operations.getOpType()==Operations.OP_ADD_1) {
+                ts = ((TextSwitcher)findViewById(R.id.textView3_2));
+                ts.setText("?");
+                ((TextView)ts.getCurrentView()).setTextColor(Color.LTGRAY);
+            }
         } else {
             tv1 = R.id.textView1_2;
             tv2 = R.id.textView2_2;

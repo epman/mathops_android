@@ -48,6 +48,17 @@ final class Operations {
         opType = (opType+1) % 5;
     }
 
+    private static boolean hasReport(int op1, int op2) {
+        while (op1>0 && op2>0) {
+            int o = (op1 % 10) + (op2 % 10);
+            if (o>=10) {
+                return true;
+            }
+            op1/=10;
+            op2/=10;
+        }
+        return false;
+    }
     @AnyThread
     void newOp() {
         switch (opType) {
@@ -60,7 +71,7 @@ final class Operations {
                 op1 = rnd.nextInt(80)+1;
                 do {
                     op2 = rnd.nextInt(97) + 1;
-                } while ((op1+op2)>99);
+                } while ((op1+op2)>99 && hasReport(op1, op2));
                 result = op1+op2;
                 break;
             case OP_ADD_3:
@@ -69,17 +80,17 @@ final class Operations {
                 result = op1+op2;
                 break;
             case OP_SUB_1:
-                op1 = rnd.nextInt(3)+1;
+                op1 = rnd.nextInt(8)+2;
                 do {
                     op2 = rnd.nextInt(7) + 1;
-                } while (op2>op1);
+                } while (op2>=op1);
                 result = op1-op2;
                 break;
             case OP_SUB_2:
-                op1 = rnd.nextInt(98)+1;
+                op1 = rnd.nextInt(90)+9;
                 do {
                     op2 = rnd.nextInt(97) + 1;
-                } while (op2>op1);
+                } while (op2>=op1);
                 result = op1-op2;
                 break;
             default:
