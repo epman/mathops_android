@@ -2,13 +2,16 @@ package org.epm.math.operations;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
@@ -19,6 +22,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -30,6 +34,9 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import org.epm.math.base.Math;
+
+import java.util.Locale;
+import java.util.MissingResourceException;
 
 public final class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks {
 
@@ -49,6 +56,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     private final static int[] textSwitchersOp = {
             R.id.textView1_1, R.id.textView1_2, R.id.textView1_sign,
             R.id.textView2_1, R.id.textView2_2, R.id.textView2_sign,
+            R.id.textView2_signPrefixed
     };
     @IdRes
     private final static int[] textSwitchersRes = {
@@ -183,7 +191,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     private final View.OnClickListener deleteClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            result = 0;
+            result = RESULT_NOT_SET;
             updateUI();
         }
     };
@@ -197,7 +205,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     @UiThread
     private void newOperation() {
         if (operations!=null) {
-            result = 0;
+            result = RESULT_NOT_SET;
             operations.newOp();
             updateUI();
             /*
@@ -209,7 +217,10 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                     */
         }
     }
-    private int result = 0;
+
+    private final static int RESULT_NOT_SET = -1;
+    private int result = RESULT_NOT_SET;
+
     private final View.OnClickListener buttonNumberOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -222,6 +233,8 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         if (operations==null)
             return;
         final int number = Integer.parseInt((String) b.getTag());
+        if (result==RESULT_NOT_SET)
+            result = 0;
         if (operations.isOneDigit()) {
             result = result * 10 + number;
         } else {
@@ -309,6 +322,31 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     @UiThread
     private void updateUI()
     {
+
+        final SharedPreferences defs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean  itNotat = false;
+        if (defs.contains(Math.DEFKEY_BOOL_IT_NOTATION)) {
+            itNotat = defs.getBoolean(Math.DEFKEY_BOOL_IT_NOTATION, false);
+        } else {
+            final Locale current = getResources().getConfiguration().locale;
+            try {
+                final String cd = current.getISO3Country();
+                itNotat = cd.equalsIgnoreCase("ITA");
+                //defs.edit().putBoolean(Math.DEFKEY_BOOL_IT_NOTATION, itNotat).apply();
+            } catch (MissingResourceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (itNotat) {
+            findViewById(R.id.textView1_sign).setVisibility(View.VISIBLE);
+            findViewById(R.id.textView2_sign).setVisibility(View.VISIBLE);
+            findViewById(R.id.textView2_signPrefixed).setVisibility(View.INVISIBLE);
+        } else {
+            findViewById(R.id.textView1_sign).setVisibility(View.INVISIBLE);
+            findViewById(R.id.textView2_sign).setVisibility(View.INVISIBLE);
+            findViewById(R.id.textView2_signPrefixed).setVisibility(View.VISIBLE);
+        }
+
         if (operations==null)
             return;
 
@@ -318,26 +356,18 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
         ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
         ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(isSub?"-":"+");
+        ((TextSwitcher)findViewById(R.id.textView2_signPrefixed)).setText(isSub?"-":"+");
         ((TextSwitcher)findViewById(R.id.textView2_sign)).setText("=");
-        setDigit(R.id.textView1_1, 0, operations.op1);
-        setDigit(R.id.textView1_2, 1, operations.op1);
 
-        setDigit(R.id.textView2_1, 0, operations.op2);
-        setDigit(R.id.textView2_2, 1, operations.op2);
-
-        if (result==0) {
-            ((TextSwitcher)findViewById(R.id.textView3_1)).setText("");
-            ((TextSwitcher)findViewById(R.id.textView3_2)).setText("");
-            ((TextSwitcher)findViewById(R.id.textView3_3)).setText("");
-        } else {
-            setDigit(R.id.textView3_1, 0, result);
-            setDigit(R.id.textView3_2, 1, result);
-            setDigit(R.id.textView3_3, 2, result);
-        }
+        setNumber(operations.op1, -1, R.id.textView1_2, R.id.textView1_1, false);
+        setNumber(operations.op2, -1, R.id.textView2_2, R.id.textView2_1, false);
+        setNumber(result, R.id.textView3_3, R.id.textView3_2, R.id.textView3_1, (result==RESULT_NOT_SET));
+        Log.i("--------", operations.op1+(isSub?"-":"+")+operations.op2+"="+result);
 
         final Math math = Math.getInstance(this);
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
 
+        // Colors
         final int primColor = ContextCompat.getColor(this, org.epm.math.R.color.colorPrimaryDark);
         for (final @IdRes int tvid: textSwitchersOp) {
             final TextSwitcher ts = findViewById(tvid);
@@ -350,41 +380,58 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             ((TextView)ts.getNextView()).setTextColor(primColor);
         }
 
+        final int numExpectedDigits = ((int) java.lang.Math.log10(operations.result)) + 1;
+        final int numWrittenDigits = result==RESULT_NOT_SET?0:((int) java.lang.Math.log10(result)) + 1;
         final int selColor = ContextCompat.getColor(this, org.epm.math.R.color.colorAccent);
-        @IdRes int tv1, tv2, tv3;
-        TextSwitcher ts;
-        if (result==0){
-            tv1 = R.id.textView1_1;
-            tv2 = R.id.textView2_1;
-            tv3 = R.id.textView3_1;
-            final int numDigits = ((int) java.lang.Math.log10(operations.result)) + 1;
-            if (numDigits>1 && result!=operations.result && operations.getOpType()==Operations.OP_ADD_1) {
-                ts = ((TextSwitcher)findViewById(R.id.textView3_2));
-                ts.setText("?");
-                ((TextView)ts.getCurrentView()).setTextColor(Color.LTGRAY);
-            }
-        } else {
-            tv1 = R.id.textView1_2;
-            tv2 = R.id.textView2_2;
-            tv3 = R.id.textView3_2;
-            final int numDigits = ((int) java.lang.Math.log10(result)) + 1;
-            if (numDigits>2 && result!=operations.result) {
-                ts = ((TextSwitcher)findViewById(R.id.textView3_3));
-                ts.setText("?");
-                ((TextView)ts.getCurrentView()).setTextColor(Color.LTGRAY);
-            }
-        }
         if (!isOneDigitOperation) {
+            @IdRes int tv1, tv2;
+            TextSwitcher ts;
+            if (result==RESULT_NOT_SET){
+                tv1 = R.id.textView1_1;
+                tv2 = R.id.textView2_1;
+            } else {
+                tv1 = R.id.textView1_2;
+                tv2 = R.id.textView2_2;
+            }
             ts = ((TextSwitcher) findViewById(tv1));
             ((TextView) ts.getCurrentView()).setTextColor(selColor);
             ts = ((TextSwitcher) findViewById(tv2));
             ((TextView) ts.getCurrentView()).setTextColor(selColor);
         }
-        if (result!=operations.result) {
-            ts = ((TextSwitcher) findViewById(tv3));
-            ts.setText("?");
-            ((TextView) ts.getCurrentView()).setTextColor(Color.LTGRAY);
+
+        // Question Marks
+        final TextSwitcher tsRight = findViewById(R.id.textView3_1);
+        final TextSwitcher tsCenter = findViewById(R.id.textView3_2);
+        final TextSwitcher tsLeft = findViewById(R.id.textView3_3);
+        if (numWrittenDigits==0) {
+            ((TextView)tsRight.getNextView()).setTextColor(Color.LTGRAY);
+            tsRight.setText(QM);
         }
+        if (numExpectedDigits>=2 && numWrittenDigits<2) {
+            ((TextView)tsCenter.getNextView()).setTextColor(Color.LTGRAY);
+            tsCenter.setText(QM);
+        }
+        if (numExpectedDigits>=3 && numWrittenDigits<3) {
+            ((TextView)tsLeft.getNextView()).setTextColor(Color.LTGRAY);
+            tsLeft.setText(QM);
+        }
+    }
+    private static final String QM = "?";
+
+    private void setNumber(final int number, @IdRes final int tvLeft, @IdRes final int tvCenter,
+                           @IdRes final int tvRight, final boolean allEmpty) {
+        if (allEmpty) {
+            if (tvLeft>0)
+                ((TextSwitcher)findViewById(tvLeft)).setText("");
+            ((TextSwitcher)findViewById(tvCenter)).setText("");
+            ((TextSwitcher)findViewById(tvRight)).setText("");
+        } else {
+            setDigit(tvRight, 0, number);
+            setDigit(tvCenter, 1, number);
+            if (tvLeft>0)
+                setDigit(tvLeft, 2, number);
+        }
+
     }
 
 }

@@ -72,9 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:columnCount="4"
+            android:columnCount="5"
             android:rowCount="4">
 
+            <android.support.v4.widget.Space />
             <android.support.v4.widget.Space />
 
             <TextSwitcher
@@ -103,6 +104,14 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
+            <TextSwitcher
+                android:id="@+id/textView2_signPrefixed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="+"
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace" />
             <android.support.v4.widget.Space />
 
             <TextSwitcher
@@ -137,6 +146,7 @@
                 android:layout_columnSpan="4"
                 android:background="@color/colorPrimaryDark" />
 
+            <android.support.v4.widget.Space />
             <TextSwitcher
                 android:id="@+id/textView3_3"
                 android:layout_width="wrap_content"

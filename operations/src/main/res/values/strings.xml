@@ -1,7 +1,7 @@
 <resources>
     <string name="operation">Change operation</string>
     <string name="addition1">One digit additions</string>
-    <string name="addition2">Two digits additions (result less than 100)</string>
+    <string name="addition2">Two digits additions without carry</string>
     <string name="addition3">Two digits additions</string>
     <string name="subtraction1">One digit subtractions</string>
     <string name="subtraction2">Two digits subtractions</string>

@@ -48,7 +48,7 @@ final class Operations {
         opType = (opType+1) % 5;
     }
 
-    private static boolean hasReport(int op1, int op2) {
+    private static boolean hasCarry(int op1, int op2) {
         while (op1>0 && op2>0) {
             int o = (op1 % 10) + (op2 % 10);
             if (o>=10) {
@@ -75,7 +75,7 @@ final class Operations {
                 op1 = rnd.nextInt(80)+1;
                 do {
                     op2 = rnd.nextInt(97) + 1;
-                } while ((op1+op2)>99 && hasReport(op1, op2));
+                } while ((op1+op2)>99 && hasCarry(op1, op2));
                 result = op1+op2;
                 break;
             case OP_ADD_3:

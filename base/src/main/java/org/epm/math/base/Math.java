@@ -13,6 +13,7 @@ import android.view.View;
  */
 public class Math {
     private final static String DEFKEY_INT_POINTS = "points";
+    public final static String DEFKEY_BOOL_IT_NOTATION = "itn";
 
     @Nullable
     private static Math ourInstance = null;
