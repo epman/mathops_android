@@ -59,6 +59,10 @@ final class Operations {
         }
         return false;
     }
+
+    final boolean isOneDigit() {
+        return opType==Operations.OP_SUB_1 || opType==Operations.OP_ADD_1;
+    }
     @AnyThread
     void newOp() {
         switch (opType) {

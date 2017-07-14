@@ -1,8 +1,11 @@
 package org.epm.math.operations;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -62,11 +65,11 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
         operations = new Operations(this);
 
-        for (final @IdRes int tvid: textSwitchersOp) {
+        for (final @IdRes int tvid : textSwitchersOp) {
             findViewById(tvid).setOnClickListener(newOpOnClickListener);
             initTextSwitcher(tvid, textSwitcherFactoryOps);
         }
-        for (final @IdRes int tvid: textSwitchersRes) {
+        for (final @IdRes int tvid : textSwitchersRes) {
             findViewById(tvid).setOnClickListener(deleteClickListener);
             initTextSwitcher(tvid, textSwitcherFactoryOps);
         }
@@ -113,14 +116,17 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader loader, Object data) {
         final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-        final int actualVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, actualVolume + 1, AudioManager.FLAG_SHOW_UI);
+        final float actualVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        final float maxVolume = (float) audioManager
+                .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        final float volume = actualVolume / maxVolume;
 
         final DataLoader l = (DataLoader)loader;
         mpLose = l.mpLose;
         mpVictory = l.mpVictory;
-        mpVictory.setVolume(0.5f,0.5f);
-        mpLose.setVolume(0.5f,0.5f);
+
+        mpVictory.setVolume(0.5f*volume,0.5f*volume);
+        mpLose.setVolume(0.5f*volume,0.5f*volume);
     }
 
     @Override
@@ -139,8 +145,8 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             myText.setLayoutParams(layoutparams1);
 
             myText.setGravity(Gravity.CENTER_VERTICAL);
-            TextViewCompat.setTextAppearance(myText, R.style.BigFont);
-            myText.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark));
+            TextViewCompat.setTextAppearance(myText, org.epm.math.R.style.BigFont);
+            myText.setTextColor(ContextCompat.getColor(MainActivity.this, org.epm.math.R.color.colorPrimaryDark));
             return myText;
         }
     };
@@ -215,8 +221,13 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     private void buttonPressed(@NonNull final Button b) {
         if (operations==null)
             return;
-        final int numDigits = result==0?0:(int)java.lang.Math.log10(result)+1;
-        result = result + Integer.parseInt( (String) b.getTag() ) * (int)java.lang.Math.pow(10, numDigits);
+        final int number = Integer.parseInt((String) b.getTag());
+        if (operations.isOneDigit()) {
+            result = result * 10 + number;
+        } else {
+            final int numDigits = result == 0 ? 0 : (int) java.lang.Math.log10(result) + 1;
+            result = result + number * (int) java.lang.Math.pow(10, numDigits);
+        }
         updateUI();
         final int l1 = (int)java.lang.Math.log10(result)+1;
         final int l2 = (int)java.lang.Math.log10(operations.result)+1;
@@ -303,8 +314,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
         final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
                 operations.getOpType()==Operations.OP_SUB_2;
-        final boolean isOneDigitOperation = operations.getOpType()==Operations.OP_SUB_1 &&
-                operations.getOpType()==Operations.OP_ADD_1;
+        final boolean isOneDigitOperation = operations.isOneDigit();
 
         ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
         ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(isSub?"-":"+");
@@ -328,7 +338,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final Math math = Math.getInstance(this);
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
 
-        final int primColor = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+        final int primColor = ContextCompat.getColor(this, org.epm.math.R.color.colorPrimaryDark);
         for (final @IdRes int tvid: textSwitchersOp) {
             final TextSwitcher ts = findViewById(tvid);
             ((TextView)ts.getCurrentView()).setTextColor(primColor);
@@ -340,7 +350,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             ((TextView)ts.getNextView()).setTextColor(primColor);
         }
 
-        final int selColor = ContextCompat.getColor(this, R.color.colorAccent);
+        final int selColor = ContextCompat.getColor(this, org.epm.math.R.color.colorAccent);
         @IdRes int tv1, tv2, tv3;
         TextSwitcher ts;
         if (result==0){
