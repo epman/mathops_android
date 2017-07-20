@@ -72,10 +72,10 @@ final class Operations {
                 result = op1+op2;
                 break;
             case OP_ADD_2:
-                op1 = rnd.nextInt(80)+1;
                 do {
+                    op1 = rnd.nextInt(80)+1;
                     op2 = rnd.nextInt(97) + 1;
-                } while ((op1+op2)>99 && hasCarry(op1, op2));
+                } while ((op1+op2)>99 || hasCarry(op1, op2));
                 result = op1+op2;
                 break;
             case OP_ADD_3:
@@ -84,15 +84,15 @@ final class Operations {
                 result = op1+op2;
                 break;
             case OP_SUB_1:
-                op1 = rnd.nextInt(8)+2;
                 do {
+                    op1 = rnd.nextInt(8)+2;
                     op2 = rnd.nextInt(7) + 1;
                 } while (op2>=op1);
                 result = op1-op2;
                 break;
             case OP_SUB_2:
-                op1 = rnd.nextInt(90)+9;
                 do {
+                    op1 = rnd.nextInt(90)+9;
                     op2 = rnd.nextInt(97) + 1;
                 } while (op2>=op1);
                 result = op1-op2;

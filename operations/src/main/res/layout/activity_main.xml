@@ -75,8 +75,22 @@
             android:columnCount="5"
             android:rowCount="4">
 
-            <android.support.v4.widget.Space />
-            <android.support.v4.widget.Space />
+            <!-- First operand -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text=" "
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text=" "
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace"/>
 
             <TextSwitcher
                 android:id="@+id/textView1_2"
@@ -104,6 +118,8 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
+            <!-- Second operand -->
+
             <TextSwitcher
                 android:id="@+id/textView2_signPrefixed"
                 android:layout_width="wrap_content"
@@ -112,7 +128,14 @@
                 android:text="+"
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
-            <android.support.v4.widget.Space />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text=" "
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace"/>
+
 
             <TextSwitcher
                 android:id="@+id/textView2_2"
@@ -140,13 +163,21 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
+            <!-- Line -->
             <View
                 android:layout_width="180dp"
                 android:layout_height="4dp"
-                android:layout_columnSpan="4"
+                android:layout_columnSpan="5"
                 android:background="@color/colorPrimaryDark" />
 
-            <android.support.v4.widget.Space />
+            <!-- Results -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text=" "
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace"/>
             <TextSwitcher
                 android:id="@+id/textView3_3"
                 android:layout_width="wrap_content"
@@ -172,7 +203,13 @@
                 android:textAppearance="@style/BigFont"
                 android:typeface="monospace" />
 
-            <android.support.v4.widget.Space />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text=" "
+                android:textAppearance="@style/BigFont"
+                android:typeface="monospace"/>
 
         </GridLayout>
 

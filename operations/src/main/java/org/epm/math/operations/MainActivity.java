@@ -133,8 +133,10 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         mpLose = l.mpLose;
         mpVictory = l.mpVictory;
 
-        mpVictory.setVolume(0.5f*volume,0.5f*volume);
-        mpLose.setVolume(0.5f*volume,0.5f*volume);
+        if (mpVictory!=null)
+            mpVictory.setVolume(0.5f*volume,0.5f*volume);
+        if (mpLose!=null)
+            mpLose.setVolume(0.5f*volume,0.5f*volume);
     }
 
     @Override
@@ -319,10 +321,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
     }
 
-    @UiThread
-    private void updateUI()
-    {
-
+    private void showSigns() {
         final SharedPreferences defs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean  itNotat = false;
         if (defs.contains(Math.DEFKEY_BOOL_IT_NOTATION)) {
@@ -347,17 +346,27 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             findViewById(R.id.textView2_signPrefixed).setVisibility(View.VISIBLE);
         }
 
+        final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
+                operations.getOpType()==Operations.OP_SUB_2;
+        ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
+        ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(isSub?"-":"+");
+        ((TextSwitcher)findViewById(R.id.textView2_signPrefixed)).setText(isSub?"-":"+");
+        ((TextSwitcher)findViewById(R.id.textView2_sign)).setText("=");
+    }
+
+    @UiThread
+    private void updateUI()
+    {
         if (operations==null)
             return;
+
+        showSigns();
+
 
         final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
                 operations.getOpType()==Operations.OP_SUB_2;
         final boolean isOneDigitOperation = operations.isOneDigit();
 
-        ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
-        ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(isSub?"-":"+");
-        ((TextSwitcher)findViewById(R.id.textView2_signPrefixed)).setText(isSub?"-":"+");
-        ((TextSwitcher)findViewById(R.id.textView2_sign)).setText("=");
 
         setNumber(operations.op1, -1, R.id.textView1_2, R.id.textView1_1, false);
         setNumber(operations.op2, -1, R.id.textView2_2, R.id.textView2_1, false);
@@ -403,17 +412,24 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final TextSwitcher tsRight = findViewById(R.id.textView3_1);
         final TextSwitcher tsCenter = findViewById(R.id.textView3_2);
         final TextSwitcher tsLeft = findViewById(R.id.textView3_3);
-        if (numWrittenDigits==0) {
-            ((TextView)tsRight.getNextView()).setTextColor(Color.LTGRAY);
+        if (operations.getOpType()==Operations.OP_ADD_1 && numExpectedDigits>1 && numWrittenDigits==1) {
+            ((TextView) tsCenter.getNextView()).setTextColor(primColor);
+            tsCenter.setText(Integer.toString(result));
+            ((TextView) tsRight.getNextView()).setTextColor(Color.LTGRAY);
             tsRight.setText(QM);
-        }
-        if (numExpectedDigits>=2 && numWrittenDigits<2) {
-            ((TextView)tsCenter.getNextView()).setTextColor(Color.LTGRAY);
-            tsCenter.setText(QM);
-        }
-        if (numExpectedDigits>=3 && numWrittenDigits<3) {
-            ((TextView)tsLeft.getNextView()).setTextColor(Color.LTGRAY);
-            tsLeft.setText(QM);
+        } else {
+            if (numWrittenDigits == 0) {
+                ((TextView) tsRight.getNextView()).setTextColor(Color.LTGRAY);
+                tsRight.setText(QM);
+            }
+            if (numExpectedDigits >= 2 && numWrittenDigits < 2) {
+                ((TextView) tsCenter.getNextView()).setTextColor(Color.LTGRAY);
+                tsCenter.setText(QM);
+            }
+            if (numExpectedDigits >= 3 && numWrittenDigits < 3) {
+                ((TextView) tsLeft.getNextView()).setTextColor(Color.LTGRAY);
+                tsLeft.setText(QM);
+            }
         }
     }
     private static final String QM = "?";
@@ -422,9 +438,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                            @IdRes final int tvRight, final boolean allEmpty) {
         if (allEmpty) {
             if (tvLeft>0)
-                ((TextSwitcher)findViewById(tvLeft)).setText("");
-            ((TextSwitcher)findViewById(tvCenter)).setText("");
-            ((TextSwitcher)findViewById(tvRight)).setText("");
+                ((TextSwitcher)findViewById(tvLeft)).setText(" ");
+            ((TextSwitcher)findViewById(tvCenter)).setText(" ");
+            ((TextSwitcher)findViewById(tvRight)).setText(" ");
         } else {
             setDigit(tvRight, 0, number);
             setDigit(tvCenter, 1, number);
