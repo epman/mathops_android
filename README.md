@@ -5,7 +5,11 @@ and subtractions.
 
 [Preliminary version](https://play.google.com/apps/testing/org.epm.math)
 
-![ScreenShot](docs/imgs/s_en_1.png)
+<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_1.png" width="200" >
+<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_2.png" width="200" >
+<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_3.png" width="200" >
+<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_4.png" width="200" >
+
 
 ## Open source and free media and libraries
 
