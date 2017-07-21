@@ -1,9 +1,11 @@
-# Math Operations for Android
+# Add and Subtract for Android
 
 A simple open source Android app to practice additions 
 and subtractions. 
 
 [Preliminary version](https://play.google.com/apps/testing/org.epm.math)
+
+![ScreenShot](docs/imgs/s_en_1.png)
 
 ## Open source and free media and libraries
 

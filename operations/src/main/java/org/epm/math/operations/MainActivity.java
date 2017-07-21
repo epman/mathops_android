@@ -348,11 +348,16 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             findViewById(R.id.textView2_signPrefixed).setVisibility(View.VISIBLE);
         }
 
-        final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
-                operations.getOpType()==Operations.OP_SUB_2;
+        String sign;
+        if (operations.getOpType()==Operations.OP_SUB_1 ||
+                operations.getOpType()==Operations.OP_SUB_2 ) {
+            sign = "-";
+        } else {
+            sign = "+";
+        }
         ((TextView)findViewById(R.id.textCurrentOperation)).setText(Operations.OPNAMES[operations.getOpType()]);
-        ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(isSub?"-":"+");
-        ((TextSwitcher)findViewById(R.id.textView2_signPrefixed)).setText(isSub?"-":"+");
+        ((TextSwitcher)findViewById(R.id.textView1_sign)).setText(sign);
+        ((TextSwitcher)findViewById(R.id.textView2_signPrefixed)).setText(sign);
         ((TextSwitcher)findViewById(R.id.textView2_sign)).setText("=");
     }
 
@@ -365,15 +370,12 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         showSigns();
 
 
-        final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 &&
-                operations.getOpType()==Operations.OP_SUB_2;
         final boolean isOneDigitOperation = operations.isOneDigit();
 
 
         setNumber(operations.op1, -1, R.id.textView1_2, R.id.textView1_1, false);
         setNumber(operations.op2, -1, R.id.textView2_2, R.id.textView2_1, false);
         setNumber(result, R.id.textView3_3, R.id.textView3_2, R.id.textView3_1, (result==RESULT_NOT_SET));
-        //Log.i("--------", operations.op1+(isSub?"-":"+")+operations.op2+"="+result);
 
         final Math math = Math.getInstance(this);
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
