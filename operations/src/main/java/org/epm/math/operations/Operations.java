@@ -43,9 +43,23 @@ final class Operations {
         return opType;
     }
 
-    void changeOpType(){
+    void changeOpType() {
         //noinspection WrongConstant
-        opType = (opType+1) % 5;
+        //opType = (opType+1) % 5;
+        switch (opType) {
+            case OP_ADD_1:
+                opType = OP_ADD_2;
+                break;
+            case OP_ADD_2:
+                opType = OP_SUB_1;
+                break;
+            case OP_SUB_1:
+                opType = OP_SUB_2;
+                break;
+            default:
+                opType = OP_ADD_1;
+                break;
+        }
     }
 
     private static boolean hasCarry(int op1, int op2) {

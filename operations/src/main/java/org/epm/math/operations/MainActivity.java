@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -106,6 +107,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         }
         findViewById(R.id.buttonDelete).setOnClickListener(deleteClickListener);
         findViewById(R.id.buttonSpace).setOnClickListener(deleteClickListener);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         newOperation();
     }
@@ -371,7 +373,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         setNumber(operations.op1, -1, R.id.textView1_2, R.id.textView1_1, false);
         setNumber(operations.op2, -1, R.id.textView2_2, R.id.textView2_1, false);
         setNumber(result, R.id.textView3_3, R.id.textView3_2, R.id.textView3_1, (result==RESULT_NOT_SET));
-        Log.i("--------", operations.op1+(isSub?"-":"+")+operations.op2+"="+result);
+        //Log.i("--------", operations.op1+(isSub?"-":"+")+operations.op2+"="+result);
 
         final Math math = Math.getInstance(this);
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));

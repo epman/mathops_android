@@ -5,7 +5,7 @@ android {
         applicationId "org.epm.math"
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 4
+        versionCode 5
         versionName "1.0"
     }
 }
