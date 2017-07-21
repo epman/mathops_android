@@ -8,6 +8,11 @@ android {
         versionCode 5
         versionName "1.0"
     }
+    buildTypes {
+        debug {
+            minifyEnabled true
+        }
+    }
 }
 
 dependencies {
