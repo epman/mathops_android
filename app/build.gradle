@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
 
     defaultConfig {
         applicationId "org.epm.math"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.1"
+        versionCode 7
+        versionName "1.2"
         resConfigs "en", "it"
     }
     buildTypes {
