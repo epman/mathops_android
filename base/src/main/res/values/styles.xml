@@ -22,6 +22,7 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/bigtxtSize</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CalcButton" parent="Base.TextAppearance.AppCompat.Widget.Button.Colored">

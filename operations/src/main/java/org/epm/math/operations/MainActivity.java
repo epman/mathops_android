@@ -311,6 +311,10 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         if (operations!=null) {
             result = RESULT_NOT_SET;
             operations.newOp();
+            boolean isSub = operations.getOpType()==Operations.OP_SUB_1 || operations.getOpType()==Operations.OP_SUB_2;
+            findViewById(R.id.textCurrentOperation).announceForAccessibility(
+                    operations.op1+(isSub?"-":"+")+operations.op2
+            );
             updateUI();
             /*
             new AlertDialog.Builder(this)
