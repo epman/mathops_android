@@ -20,7 +20,7 @@
 
     <style name="BigFont" parent="Base.TextAppearance.AppCompat.Display3">
         <item name="android:textColor">@color/colorPrimaryDark</item>
-        <!--item name="android:textSize">70sp</item-->
+        <item name="android:textSize">@dimen/bigtxtSize</item>
         <item name="android:typeface">monospace</item>
     </style>
 

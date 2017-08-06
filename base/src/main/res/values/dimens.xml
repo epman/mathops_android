@@ -1,2 +1,3 @@
 <resources>
+    <dimen name="bigtxtSize">90sp</dimen>
 </resources>

@@ -27,9 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:padding="2dp"
                 android:contentDescription="@string/points"
                 android:labelFor="@+id/textSwitcherPoints"
+                android:padding="2dp"
                 app:srcCompat="@drawable/ic_medal" />
 
             <TextSwitcher
@@ -55,9 +55,11 @@
 
     <FrameLayout
         android:id="@+id/layoutMainArea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_above="@+id/buttonsTopRow"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textCurrentOperation"
         android:animateLayoutChanges="true">
 
@@ -69,155 +71,191 @@
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_stack_of_papers" />
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:columnCount="5"
-            android:rowCount="4">
+            android:orientation="vertical"
+            >
 
             <!-- First operand -->
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=" "
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                android:layout_weight="1"
+                android:orientation="horizontal" android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=" "
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=" "
+                    android:layout_weight="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace"
+                    />
 
-            <TextSwitcher
-                android:id="@+id/textView1_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=" "
+                    android:layout_weight="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace"
+                     />
 
-            <TextSwitcher
-                android:id="@+id/textView1_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace"
+                     />
 
-            <TextSwitcher
-                android:id="@+id/textView1_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="+"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView1_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="1"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace"
+                    />
 
+                <TextSwitcher
+                    android:id="@+id/textView1_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace"
+                    />
+            </LinearLayout>
             <!-- Second operand -->
-
-            <TextSwitcher
-                android:id="@+id/textView2_signPrefixed"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="+"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                android:layout_weight="1"
+                android:orientation="horizontal" android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=" "
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView2_signPrefixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="+"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text=" "
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
 
-            <TextSwitcher
-                android:id="@+id/textView2_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView2_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-            <TextSwitcher
-                android:id="@+id/textView2_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView2_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-            <TextSwitcher
-                android:id="@+id/textView2_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="="
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
-
+                <TextSwitcher
+                    android:id="@+id/textView2_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="="
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
+            </LinearLayout>
             <!-- Line -->
             <View
                 android:id="@+id/viewHLine"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_columnSpan="5"
-                android:background="@color/colorPrimaryDark" />
+                android:background="@color/colorPrimaryDark"
+                android:importantForAccessibility="no"/>
 
             <!-- Results -->
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=" "
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                android:layout_weight="1"
+                android:orientation="horizontal" android:focusable="true">
 
-            <TextSwitcher
-                android:id="@+id/textView3_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text=" "
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-            <TextSwitcher
-                android:id="@+id/textView3_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView3_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-            <TextSwitcher
-                android:id="@+id/textView3_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="1"
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView3_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text=" "
-                android:textAppearance="@style/BigFont"
-                android:typeface="monospace" />
+                <TextSwitcher
+                    android:id="@+id/textView3_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="1"
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
 
-        </GridLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text=" "
+                    android:textAppearance="@style/BigFont"
+                    android:typeface="monospace" />
+            </LinearLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imgViewSmileOk"

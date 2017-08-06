@@ -26,6 +26,9 @@ dependencies {
     })
     implementation project(':base')
     implementation 'com.android.support:preference-v14:26.0.0'
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation 'com.android.support:design:26.0.0'
+
     testImplementation 'junit:junit:4.12'
     
 }
