@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="operation">Cambia operazione</string>
     <string name="addition1">Addizioni a una cifra</string>
     <string name="addition2">Addizioni a due cifre senza riporto</string>
     <string name="addition3">Addizioni a due cifre</string>

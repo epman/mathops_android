@@ -9,7 +9,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+import android.support.v7.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -22,8 +22,12 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -35,6 +39,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import org.epm.math.base.Math;
+import org.epm.math.settings.SettingsActivity;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -69,9 +74,13 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         setContentView(R.layout.activity_main);
         //Math.hideSystemUI(getWindow().getDecorView());
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         getSupportLoaderManager()
                 .initLoader(0, null, this);
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         operations = new Operations(this);
 
         for (final @IdRes int tvid : textSwitchersOp) {
@@ -82,6 +91,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             findViewById(tvid).setOnClickListener(deleteClickListener);
             initTextSwitcher(tvid, textSwitcherFactoryOps);
         }
+        /*
         findViewById(R.id.buttonChangeOperation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +99,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                 newOperation();
             }
         });
+        */
 
         initTextSwitcher(R.id.textSwitcerPoints, textSwitcherFactoryPoints);
 
@@ -112,6 +123,74 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         newOperation();
     }
 
+    private void setAccButtonStyle(@IdRes final int bid) {
+        final Button b = findViewById(bid);
+        setAccButtonStyle(b);
+    }
+    private void setAccButtonStyle(final Button b) {
+        //b.setBackgroundColor(Color.BLACK);
+        b.setTextColor(Color.YELLOW);
+        b.setBackgroundResource(R.drawable.accrect);
+    }
+    private void updateAppStyle(){
+        final SharedPreferences defs = PreferenceManager.getDefaultSharedPreferences(this);
+        final boolean hc = defs.getBoolean(Math.DEFKEY_BOOL_HIGH_CONTRAST, true);
+        if (hc) {
+            findViewById(R.id.toolbar).setBackgroundColor(Color.BLACK);
+            ((TextView)findViewById(R.id.textCurrentOperation)).setTextColor(Color.YELLOW);
+            ((TextView)findViewById(R.id.textCurrentOperation)).setBackgroundColor(Color.BLACK);
+            for (final Button b : btns) {
+                setAccButtonStyle(b);
+            }
+            setAccButtonStyle(R.id.buttonDelete);
+            setAccButtonStyle(R.id.buttonSpace);
+            ((FrameLayout)findViewById(R.id.layoutMainArea)).setBackgroundColor(Color.BLACK);
+            findViewById(R.id.imageViewBg).setVisibility(View.GONE);
+
+            colorDigits = Color.CYAN;
+            colorSelectedDigits = Color.GREEN;
+            colorQuestionMarks = Color.CYAN;
+
+        } else {
+            int colorPrim = ContextCompat.getColor(this, org.epm.math.R.color.colorPrimary);
+            int colorPrimDark = ContextCompat.getColor(this, org.epm.math.R.color.colorPrimaryDark);
+            findViewById(R.id.toolbar).setBackgroundColor(colorPrim);
+
+            ((TextView)findViewById(R.id.textCurrentOperation)).setTextColor(Color.DKGRAY);
+            ((TextView)findViewById(R.id.textCurrentOperation)).setBackgroundColor(Color.WHITE);
+            for (final Button b : btns) {
+                b.setBackgroundColor(colorPrim);
+                b.setTextColor(Color.WHITE);
+            }
+            Button b = findViewById(R.id.buttonDelete);
+            b.setBackgroundColor(colorPrim);
+            b.setTextColor(Color.WHITE);
+            b = findViewById(R.id.buttonSpace);
+            b.setBackgroundColor(colorPrim);
+            b.setTextColor(Color.WHITE);
+
+            FrameLayout fl = ((FrameLayout)findViewById(R.id.layoutMainArea));
+            fl.setBackgroundColor(Color.WHITE);
+            findViewById(R.id.imageViewBg).setVisibility(View.VISIBLE);
+            colorDigits = colorPrimDark;
+            colorSelectedDigits = ContextCompat.getColor(this, org.epm.math.R.color.colorAccent);
+            colorQuestionMarks = Color.LTGRAY;
+        }
+        findViewById(R.id.viewHLine).setBackgroundColor(colorDigits);
+        updateUI();
+    }
+
+    private int colorDigits = Color.CYAN;
+    private int colorQuestionMarks = Color.LTGRAY;
+    private int colorSelectedDigits = Color.GREEN;
+
+    @Override
+    protected void onResume() {
+        setTitle("");
+        updateAppStyle();
+        super.onResume();
+    }
+
     //region Loaders
 
     /**
@@ -122,6 +201,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final DataLoader l = new DataLoader(this);
         return l;
     }
+
 
     @Override
     public void onLoadFinished(Loader loader, Object data) {
@@ -147,6 +227,35 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     }
     //endregion
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId()==R.id.menu_preferences) {
+            showPreferences();
+            return true;
+        } else if (item.getItemId()==R.id.menu_changeop) {
+            operations.changeOpType();
+            newOperation();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private final int ACTIVITY_SETTINGS_RES_CODE =2323;
+
+    private void showPreferences() {
+        final Intent i = new Intent(this, SettingsActivity.class);
+        this.startActivityForResult(i, ACTIVITY_SETTINGS_RES_CODE);
+    }
 
     private ViewSwitcher.ViewFactory textSwitcherFactoryOps = new ViewSwitcher.ViewFactory() {
 
@@ -361,6 +470,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         ((TextSwitcher)findViewById(R.id.textView2_sign)).setText("=");
     }
 
+
     @UiThread
     private void updateUI()
     {
@@ -381,21 +491,19 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
 
         // Colors
-        final int primColor = ContextCompat.getColor(this, org.epm.math.R.color.colorPrimaryDark);
         for (final @IdRes int tvid: textSwitchersOp) {
             final TextSwitcher ts = findViewById(tvid);
-            ((TextView)ts.getCurrentView()).setTextColor(primColor);
-            ((TextView)ts.getNextView()).setTextColor(primColor);
+            ((TextView)ts.getCurrentView()).setTextColor(colorDigits);
+            ((TextView)ts.getNextView()).setTextColor(colorDigits);
         }
         for (final @IdRes int tvid: textSwitchersRes) {
             final TextSwitcher ts = findViewById(tvid);
-            ((TextView)ts.getCurrentView()).setTextColor(primColor);
-            ((TextView)ts.getNextView()).setTextColor(primColor);
+            ((TextView)ts.getCurrentView()).setTextColor(colorDigits);
+            ((TextView)ts.getNextView()).setTextColor(colorDigits);
         }
 
         final int numExpectedDigits = ((int) java.lang.Math.log10(operations.result)) + 1;
         final int numWrittenDigits = result==RESULT_NOT_SET?0:((int) java.lang.Math.log10(result)) + 1;
-        final int selColor = ContextCompat.getColor(this, org.epm.math.R.color.colorAccent);
         if (!isOneDigitOperation) {
             @IdRes int tv1, tv2;
             TextSwitcher ts;
@@ -407,9 +515,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                 tv2 = R.id.textView2_2;
             }
             ts = ((TextSwitcher) findViewById(tv1));
-            ((TextView) ts.getCurrentView()).setTextColor(selColor);
+            ((TextView) ts.getCurrentView()).setTextColor(colorSelectedDigits);
             ts = ((TextSwitcher) findViewById(tv2));
-            ((TextView) ts.getCurrentView()).setTextColor(selColor);
+            ((TextView) ts.getCurrentView()).setTextColor(colorSelectedDigits);
         }
 
         // Question Marks
@@ -417,21 +525,21 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final TextSwitcher tsCenter = findViewById(R.id.textView3_2);
         final TextSwitcher tsLeft = findViewById(R.id.textView3_3);
         if (operations.getOpType()==Operations.OP_ADD_1 && numExpectedDigits>1 && numWrittenDigits==1) {
-            ((TextView) tsCenter.getNextView()).setTextColor(primColor);
+            ((TextView) tsCenter.getNextView()).setTextColor(colorDigits);
             tsCenter.setText(Integer.toString(result));
-            ((TextView) tsRight.getNextView()).setTextColor(Color.LTGRAY);
+            ((TextView) tsRight.getNextView()).setTextColor(colorQuestionMarks);
             tsRight.setText(QM);
         } else {
             if (numWrittenDigits == 0) {
-                ((TextView) tsRight.getNextView()).setTextColor(Color.LTGRAY);
+                ((TextView) tsRight.getNextView()).setTextColor(colorQuestionMarks);
                 tsRight.setText(QM);
             }
             if (numExpectedDigits >= 2 && numWrittenDigits < 2) {
-                ((TextView) tsCenter.getNextView()).setTextColor(Color.LTGRAY);
+                ((TextView) tsCenter.getNextView()).setTextColor(colorQuestionMarks);
                 tsCenter.setText(QM);
             }
             if (numExpectedDigits >= 3 && numWrittenDigits < 3) {
-                ((TextView) tsLeft.getNextView()).setTextColor(Color.LTGRAY);
+                ((TextView) tsLeft.getNextView()).setTextColor(colorQuestionMarks);
                 tsLeft.setText(QM);
             }
         }
