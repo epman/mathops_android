@@ -101,7 +101,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         });
         */
 
-        initTextSwitcher(R.id.textSwitcerPoints, textSwitcherFactoryPoints);
+        initTextSwitcher(R.id.textSwitcherPoints, textSwitcherFactoryPoints);
 
         btns[0] = (Button) findViewById(R.id.button0);
         btns[1] = (Button) findViewById(R.id.button1);
@@ -371,7 +371,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             mpVictory.start();
         final Math math = Math.getInstance(this);
         math.increasePoints(this);
-        ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
+        ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -399,7 +399,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             mpLose.start();
         final Math math = Math.getInstance(this);
         math.increasePoints(this);
-        ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
+        ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -488,7 +488,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         setNumber(result, R.id.textView3_3, R.id.textView3_2, R.id.textView3_1, (result==RESULT_NOT_SET));
 
         final Math math = Math.getInstance(this);
-        ((TextSwitcher)findViewById(R.id.textSwitcerPoints)).setText(Integer.toString(math.getPoints()));
+        ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
 
         // Colors
         for (final @IdRes int tvid: textSwitchersOp) {

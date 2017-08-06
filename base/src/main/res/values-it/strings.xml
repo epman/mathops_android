@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">Aggiungi e Sottrai</string>
     <string name="operation">Cambia operazione</string>
+    <string name="preferences">Preferenze</string>
+    <string name="highContrast">Contrasto elevato</string>
+    <string name="points">Punti</string>
 </resources>
