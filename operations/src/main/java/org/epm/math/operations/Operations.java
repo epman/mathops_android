@@ -77,6 +77,11 @@ final class Operations {
     final boolean isOneDigit() {
         return opType==Operations.OP_SUB_1 || opType==Operations.OP_ADD_1;
     }
+
+    final String getSignForAccessibility(final Context ctx) {
+        boolean isSub = opType==Operations.OP_SUB_1 || opType==Operations.OP_SUB_2;
+        return (isSub?ctx.getString(R.string.minus):"+");
+    }
     @AnyThread
     void newOp() {
         switch (opType) {

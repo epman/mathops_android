@@ -111,7 +111,12 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         findViewById(R.id.buttonSpace).setOnClickListener(deleteClickListener);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        newOperation();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                newOperation();
+            }
+        }, 500);
     }
 
     private void setAccButtonStyle(@IdRes final int bid) {
@@ -311,10 +316,12 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         if (operations!=null) {
             result = RESULT_NOT_SET;
             operations.newOp();
-            boolean isSub = operations.getOpType()==Operations.OP_SUB_1 || operations.getOpType()==Operations.OP_SUB_2;
             findViewById(R.id.textCurrentOperation).announceForAccessibility(
-                    operations.op1+(isSub?"-":"+")+operations.op2
+                    operations.op1+operations.getSignForAccessibility(this)+operations.op2
             );
+            findViewById(R.id.operandfirst).setContentDescription(Integer.toString(operations.op1));
+            final boolean isSub = operations.getOpType()==Operations.OP_SUB_1 || operations.getOpType()==Operations.OP_SUB_2;
+            findViewById(R.id.operandsecond).setContentDescription((isSub?"-":"+")+" "+operations.op2);
             updateUI();
             /*
             new AlertDialog.Builder(this)
@@ -341,6 +348,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         if (operations==null)
             return;
         final int number = Integer.parseInt((String) b.getTag());
+        findViewById(R.id.textCurrentOperation).announceForAccessibility((String)b.getTag());
         if (result==RESULT_NOT_SET)
             result = 0;
         if (operations.isOneDigit()) {
@@ -348,6 +356,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         } else {
             final int numDigits = result == 0 ? 0 : (int) java.lang.Math.log10(result) + 1;
             result = result + number * (int) java.lang.Math.pow(10, numDigits);
+            findViewById(R.id.textCurrentOperation).announceForAccessibility((String)b.getTag());
         }
         updateUI();
         final int l1 = (int)java.lang.Math.log10(result)+1;
@@ -356,6 +365,8 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             victory();
         } else if (l1>=l2) {
             lose();
+        } else {
+
         }
     }
 
@@ -364,6 +375,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     {
         if (mpVictory!=null)
             mpVictory.start();
+        findViewById(R.id.textCurrentOperation).announceForAccessibility(
+                getString(R.string.exact, operations.op1, operations.getSignForAccessibility(this), operations.op2, operations.result)
+        );
         final Math math = Math.getInstance(this);
         math.increasePoints(this);
         ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
@@ -378,13 +392,13 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
             public void run() {
                 findViewById(R.id.imgViewSmileOk).setVisibility(View.GONE);
             }
-        }, 2500);
+        }, 3000);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 newOperation();
             }
-        }, 3000);
+        }, 3500);
     }
 
     @UiThread
@@ -393,8 +407,11 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         if (mpLose!=null)
             mpLose.start();
         final Math math = Math.getInstance(this);
-        math.increasePoints(this);
-        ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
+        //math.increasePoints(this);
+        //((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
+        findViewById(R.id.textCurrentOperation).announceForAccessibility(
+                getString(R.string.wrong, operations.op1, operations.getSignForAccessibility(this), operations.op2, operations.result)
+        );
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -415,17 +432,6 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         }, 3000);
     }
 
-    private void setDigit(@IdRes final int tvId, final int digit, final int number){
-        final int n0 = number / (int)java.lang.Math.pow(10, digit);
-        final int n1 = n0 % 10;
-        if (n0==0 && n1==0 && digit>0) {
-            ((TextSwitcher)findViewById(tvId)).setText(" ");
-        } else {
-            final String s = Integer.toString(n1);
-            ((TextSwitcher) findViewById(tvId)).setText(s);
-        }
-
-    }
 
     private void showSigns() {
         final SharedPreferences defs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -520,24 +526,27 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final TextSwitcher tsCenter = findViewById(R.id.textView3_2);
         final TextSwitcher tsLeft = findViewById(R.id.textView3_3);
         if (operations.getOpType()==Operations.OP_ADD_1 && numExpectedDigits>1 && numWrittenDigits==1) {
-            ((TextView) tsCenter.getNextView()).setTextColor(colorDigits);
-            tsCenter.setText(Integer.toString(result));
-            ((TextView) tsRight.getNextView()).setTextColor(colorQuestionMarks);
-            tsRight.setText(QM);
+            setTextAndColor( tsCenter, Integer.toString(result),colorDigits);
+            setTextAndColor( tsRight, QM, colorQuestionMarks);
         } else {
             if (numWrittenDigits == 0) {
-                ((TextView) tsRight.getNextView()).setTextColor(colorQuestionMarks);
-                tsRight.setText(QM);
+                setTextAndColor(tsRight, QM, colorQuestionMarks);
             }
             if (numExpectedDigits >= 2 && numWrittenDigits < 2) {
-                ((TextView) tsCenter.getNextView()).setTextColor(colorQuestionMarks);
-                tsCenter.setText(QM);
+                setTextAndColor(tsCenter, QM, colorQuestionMarks);
             }
             if (numExpectedDigits >= 3 && numWrittenDigits < 3) {
-                ((TextView) tsLeft.getNextView()).setTextColor(colorQuestionMarks);
-                tsLeft.setText(QM);
+                setTextAndColor(tsLeft, QM, colorQuestionMarks);
             }
         }
+    }
+
+    private void setTextAndColor(TextSwitcher ts, String txt, int color){
+        TextView tv = ((TextView) ts.getNextView());
+        tv.setTextColor(color);
+        tv.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        ts.setText(txt);
+        ts.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
     }
     private static final String QM = "?";
 
@@ -545,9 +554,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                            @IdRes final int tvRight, final boolean allEmpty) {
         if (allEmpty) {
             if (tvLeft>0)
-                ((TextSwitcher)findViewById(tvLeft)).setText(" ");
-            ((TextSwitcher)findViewById(tvCenter)).setText(" ");
-            ((TextSwitcher)findViewById(tvRight)).setText(" ");
+                setEmpty(tvLeft);
+            setEmpty(tvCenter);
+            setEmpty(tvRight);
         } else {
             setDigit(tvRight, 0, number);
             setDigit(tvCenter, 1, number);
@@ -555,6 +564,28 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                 setDigit(tvLeft, 2, number);
         }
 
+    }
+
+
+    private void setDigit(@IdRes final int tvId, final int digit, final int number){
+        final int n0 = number / (int)java.lang.Math.pow(10, digit);
+        final int n1 = n0 % 10;
+        if (n0==0 && n1==0 && digit>0) {
+            setEmpty(tvId);
+        } else {
+            final String s = Integer.toString(n1);
+            final TextSwitcher ts = findViewById(tvId);
+            ts.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            ts.getNextView().setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            ts.setText(s);
+        }
+
+    }
+    private void setEmpty(@IdRes final int tvId){
+        final TextSwitcher ts = findViewById(tvId);
+        ts.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        ts.getNextView().setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        ts.setText(" ");
     }
 
     @Override

@@ -5,5 +5,10 @@
     <string name="addition3">Addizioni a due cifre</string>
     <string name="subtraction1">Sottrazioni a una cifra</string>
     <string name="subtraction2">Sottrazioni a due cifre</string>
+    <string name="result">Risultato</string>
+    <string name="wrong">Sbagliato: %d %s %d = %d.</string>
+    <string name="exact">Esatto: %d %s %d = %d.</string>
+    <string name="minus">meno</string>
+    <string name="delete">Cancella</string>
 
 </resources>

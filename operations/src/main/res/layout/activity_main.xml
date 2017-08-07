@@ -81,10 +81,12 @@
 
             <!-- First operand -->
             <LinearLayout
+                android:id="@+id/operandfirst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal" android:focusable="true">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -140,6 +142,7 @@
             </LinearLayout>
             <!-- Second operand -->
             <LinearLayout
+                android:id="@+id/operandsecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -204,9 +207,11 @@
 
             <!-- Results -->
             <LinearLayout
+                android:id="@+id/operandresult"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/result"
                 android:orientation="horizontal" android:focusable="true">
 
                 <TextView
@@ -225,7 +230,7 @@
                     android:layout_weight="1"
                     android:text="1"
                     android:textAppearance="@style/BigFont"
-                    android:typeface="monospace" />
+                android:typeface="monospace" />
 
                 <TextSwitcher
                     android:id="@+id/textView3_2"
@@ -334,6 +339,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/delete"
             android:text=" " />
     </LinearLayout>
 
@@ -395,6 +401,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/delete"
             android:text="X" />
     </LinearLayout>
 </RelativeLayout>
