@@ -5,4 +5,7 @@
         android:defaultValue="true"
         android:key="pref_bool_highcontrast"
         android:title="@string/highContrast" />
+
+    <Preference
+        android:summary="@string/references"/>
 </PreferenceScreen>

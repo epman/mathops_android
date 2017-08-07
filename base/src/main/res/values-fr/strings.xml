@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ajouter et soustraire</string>
+    <string name="preferences">Préférences</string>
+    <string name="highContrast">Contraste élevé</string>
+    <string name="operation">Changer opération</string>
+    <string name="points">Points</string>
+</resources>
