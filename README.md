@@ -9,15 +9,19 @@ This app helps younger kids to practice simple mathematical operations:
 * One and two digit additions without carry;
 * One and two digit subtractions with the minuend greater than the subtrahend.
 
+<a href="https://play.google.com/store/apps/details?id=org.epm.math">
+<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/gen.png" width="200" >
+</a>
+
 <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_5.png" width="200" > <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_6.png" width="200" >
 <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_1.png" width="200" > <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_2.png" width="200" >
 <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_3.png" width="200" > <img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/s_en_4.png" width="200" >
 
 
-<a href="https://play.google.com/store/apps/details?id=org.epm.math">
-<img src="https://github.com/epman/mathops_android/raw/master/docs/imgs/gen.png" width="200" >
+<a href="https://scan.coverity.com/projects/epman-mathops_android">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/13638/badge.svg"/>
 </a>
-
 
 ## Open source and free media and libraries
 

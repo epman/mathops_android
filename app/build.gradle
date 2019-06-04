@@ -1,17 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
 
     defaultConfig {
         applicationId "org.epm.math"
         minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 8
-        versionName "1.3"
-        resConfigs "en", "it"
+        targetSdkVersion 28
+        versionCode 9
+        versionName "1.4"
+        resConfigs "en", "it", "es", "fr"
     }
     buildTypes {
         release {

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeDialog" parent="Theme.AppCompat.DialogWhenLarge">
+    <style name="AppThemeDialog" parent="Theme.MaterialComponents.DialogWhenLarge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -18,20 +18,20 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="BigFont" parent="Base.TextAppearance.AppCompat.Display3">
+    <style name="BigFont" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/bigtxtSize</item>
         <item name="android:typeface">monospace</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CalcButton" parent="Base.TextAppearance.AppCompat.Widget.Button.Colored">
+    <style name="CalcButton" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">40sp</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 </resources>

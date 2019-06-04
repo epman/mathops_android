@@ -1,11 +1,8 @@
 package org.epm.math.settings;
 
-import android.support.v14.preference.PreferenceFragment;
-import android.support.v4.app.Fragment;
+import androidx.preference.PreferenceFragment;
+
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.epm.math.R;
 
