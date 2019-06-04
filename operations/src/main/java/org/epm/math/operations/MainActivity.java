@@ -7,20 +7,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.preference.PreferenceManager;
-import androidx.annotation.IdRes;
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
-import androidx.loader.app.LoaderManager;
-import androidx.core.content.ContextCompat;
-import androidx.loader.content.Loader;
-import androidx.core.widget.TextViewCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +20,18 @@ import android.widget.FrameLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.preference.PreferenceManager;
 
 import org.epm.math.base.Math;
 import org.epm.math.settings.SettingsActivity;
@@ -74,7 +72,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportLoaderManager()
+        LoaderManager.getInstance(this)
                 .initLoader(0, null, this);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -91,16 +89,16 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
 
         initTextSwitcher(R.id.textSwitcherPoints, textSwitcherFactoryPoints);
 
-        btns[0] = (Button) findViewById(R.id.button0);
-        btns[1] = (Button) findViewById(R.id.button1);
-        btns[2] = (Button) findViewById(R.id.button2);
-        btns[3] = (Button) findViewById(R.id.button3);
-        btns[4] = (Button) findViewById(R.id.button4);
-        btns[5] = (Button) findViewById(R.id.button5);
-        btns[6] = (Button) findViewById(R.id.button6);
-        btns[7] = (Button) findViewById(R.id.button7);
-        btns[8] = (Button) findViewById(R.id.button8);
-        btns[9] = (Button) findViewById(R.id.button9);
+        btns[0] = findViewById(R.id.button0);
+        btns[1] = findViewById(R.id.button1);
+        btns[2] = findViewById(R.id.button2);
+        btns[3] = findViewById(R.id.button3);
+        btns[4] = findViewById(R.id.button4);
+        btns[5] = findViewById(R.id.button5);
+        btns[6] = findViewById(R.id.button6);
+        btns[7] = findViewById(R.id.button7);
+        btns[8] = findViewById(R.id.button8);
+        btns[9] = findViewById(R.id.button9);
         for (final Button b : btns) {
             b.setOnClickListener(buttonNumberOnClickListener);
         }
@@ -191,8 +189,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
      */
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        final DataLoader l = new DataLoader(this);
-        return l;
+        return new DataLoader(this);
     }
 
 
@@ -243,7 +240,7 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         return super.onOptionsItemSelected(item);
     }
 
-    private final int ACTIVITY_SETTINGS_RES_CODE =2323;
+    private final static int ACTIVITY_SETTINGS_RES_CODE = 2323;
 
     private void showPreferences() {
         final Intent i = new Intent(this, SettingsActivity.class);
