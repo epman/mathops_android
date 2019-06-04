@@ -106,23 +106,20 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         findViewById(R.id.buttonSpace).setOnClickListener(deleteClickListener);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                newOperation();
-            }
-        }, 500);
+        handler.postDelayed(() -> newOperation() , 500);
     }
 
     private void setAccButtonStyle(@IdRes final int bid) {
         final Button b = findViewById(bid);
         setAccButtonStyle(b);
     }
+
     private void setAccButtonStyle(final Button b) {
         //b.setBackgroundColor(Color.BLACK);
         b.setTextColor(Color.YELLOW);
         b.setBackgroundResource(R.drawable.accrect);
     }
+
     private void updateAppStyle(){
         final SharedPreferences defs = PreferenceManager.getDefaultSharedPreferences(this);
         final boolean hc = defs.getBoolean(Math.DEFKEY_BOOL_HIGH_CONTRAST, true);
@@ -375,24 +372,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         final Math math = Math.getInstance(this);
         math.increasePoints(this);
         ((TextSwitcher)findViewById(R.id.textSwitcherPoints)).setText(Integer.toString(math.getPoints()));
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                findViewById(R.id.imgViewSmileOk).setVisibility(View.VISIBLE);
-            }
-        }, 500);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                findViewById(R.id.imgViewSmileOk).setVisibility(View.GONE);
-            }
-        }, 3000);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                newOperation();
-            }
-        }, 3500);
+        handler.postDelayed( () -> findViewById(R.id.imgViewSmileOk).setVisibility(View.VISIBLE), 500);
+        handler.postDelayed( () -> findViewById(R.id.imgViewSmileOk).setVisibility(View.GONE), 3000);
+        handler.postDelayed(() -> newOperation(), 3500);
     }
 
     @UiThread
@@ -406,24 +388,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
         findViewById(R.id.textCurrentOperation).announceForAccessibility(
                 getString(R.string.wrong, operations.op1, operations.getSignForAccessibility(this), operations.op2, operations.result)
         );
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                findViewById(R.id.imgViewSmileNo).setVisibility(View.VISIBLE);
-            }
-        }, 500);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                findViewById(R.id.imgViewSmileNo).setVisibility(View.GONE);
-            }
-        }, 2500);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                newOperation();
-            }
-        }, 3000);
+        handler.postDelayed(() -> findViewById(R.id.imgViewSmileNo).setVisibility(View.VISIBLE), 500);
+        handler.postDelayed(() -> findViewById(R.id.imgViewSmileNo).setVisibility(View.GONE), 2500);
+        handler.postDelayed(() -> newOperation(), 3000);
     }
 
 
@@ -509,9 +476,9 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
                 tv1 = R.id.textView1_2;
                 tv2 = R.id.textView2_2;
             }
-            ts = ((TextSwitcher) findViewById(tv1));
+            ts = findViewById(tv1);
             ((TextView) ts.getCurrentView()).setTextColor(colorSelectedDigits);
-            ts = ((TextSwitcher) findViewById(tv2));
+            ts = findViewById(tv2);
             ((TextView) ts.getCurrentView()).setTextColor(colorSelectedDigits);
         }
 
@@ -547,14 +514,14 @@ public final class MainActivity extends AppCompatActivity implements LoaderManag
     private void setNumber(final int number, @IdRes final int tvLeft, @IdRes final int tvCenter,
                            @IdRes final int tvRight, final boolean allEmpty) {
         if (allEmpty) {
-            if (tvLeft>0)
+            if (tvLeft!=0)
                 setEmpty(tvLeft);
             setEmpty(tvCenter);
             setEmpty(tvRight);
         } else {
             setDigit(tvRight, 0, number);
             setDigit(tvCenter, 1, number);
-            if (tvLeft>0)
+            if (tvLeft!=0)
                 setDigit(tvLeft, 2, number);
         }
 
