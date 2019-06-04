@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Suma y resta</string>
+    <string name="preferences">Preferencias</string>
+    <string name="highContrast">Contraste</string>
+    <string name="operation">Cambiar operación</string>
+    <string name="points">Puntos</string>
+    <string name="addition1">Adiciones de un dígito</string>
+    <string name="addition2">Adiciones fáciles de dos dígitos sin llevar</string>
+    <string name="addition3">Adiciones de dos dígitos</string>
+    <string name="subtraction1">Sustracciones de un dígito</string>
+    <string name="subtraction2">Sustracciones de dos dígitos</string>
+    <string name="result">Resultado</string>
+    <string name="wrong">Incorrecto: %d %s %d = %d.</string>
+    <string name="exact">Exacto: %d %s %d = %d.</string>
+    <string name="minus">menos</string>
+    <string name="delete">Borrar</string>
+</resources>

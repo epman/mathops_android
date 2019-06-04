@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Suma y resta</string>
-    <string name="preferences">Preferencias</string>
-    <string name="highContrast">Contraste</string>
-    <string name="operation">Cambiar operación</string>
-    <string name="points">Puntos</string>
-</resources>

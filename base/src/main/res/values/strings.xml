@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Add and Subtract</string>
-    <string name="references" translatable="false">Images courtesy of openclipart.org. Sounds by Daniel Simion (soundbible.com),  suntemple (https://freesound.org/people/suntemple)</string>
-    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.escogitare.com\",\n  }\n}]</string>
-    <string name="preferences">Preferences</string>
-    <string name="highContrast">High contrast</string>
-    <string name="operation">Change operation</string>
-    <string name="points">Points</string>
-</resources>

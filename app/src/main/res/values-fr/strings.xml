@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ajouter et soustraire</string>
+    <string name="preferences">Préférences</string>
+    <string name="highContrast">Contraste élevé</string>
+    <string name="operation">Changer opération</string>
+    <string name="points">Points</string>
+    <string name="addition1">Additions à 1 chiffre</string>
+    <string name="addition2">Additions à 2 chiffres faciles</string>
+    <string name="addition3">Additions à 2 chiffres</string>
+    <string name="subtraction1">Soustractions à 1 chiffre</string>
+    <string name="subtraction2">Soustractions à 2 chiffre</string>
+    <string name="result">Résultat</string>
+    <string name="wrong">Erreur: %d %s %d = %d.</string>
+    <string name="exact">Exact: %d %s %d = %d.</string>
+    <string name="minus">moins</string>
+    <string name="delete">Effacer</string>
+</resources>

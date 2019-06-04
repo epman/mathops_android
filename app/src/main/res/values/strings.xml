@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Add and Subtract</string>
+    <string name="references" translatable="false">Images courtesy of openclipart.org. Sounds by Daniel Simion (soundbible.com),  suntemple (https://freesound.org/people/suntemple)</string>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.escogitare.com\",\n  }\n}]</string>
+    <string name="preferences">Preferences</string>
+    <string name="highContrast">High contrast</string>
+    <string name="operation">Change operation</string>
+    <string name="points">Points</string>
+    <string name="addition1">One digit additions</string>
+    <string name="addition2">Two digits additions without carry</string>
+    <string name="addition3">Two digits additions</string>
+    <string name="subtraction1">One digit subtractions</string>
+    <string name="subtraction2">Two digits subtractions</string>
+    <string name="result">Result</string>
+    <string name="wrong">Wrong: %d %s %d = %d.</string>
+    <string name="exact">Good: %d %s %d = %d.</string>
+    <string name="minus">minus</string>
+    <string name="delete">Delete</string>
+</resources>
